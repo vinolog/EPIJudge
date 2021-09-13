@@ -4,13 +4,31 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
 public class DescendantAndAncestorInBst {
-
+  private static boolean helper(BstNode<Integer> tree, BstNode<Integer> key) {
+    if (tree == null) {
+      return false;
+    }
+    if (tree == key) {
+      return true;
+    }
+    if (tree.data > key.data) {
+      return helper(tree.left, key);
+    }
+    return helper(tree.right, key);
+  }
   public static boolean
   pairIncludesAncestorAndDescendantOfM(BstNode<Integer> possibleAncOrDesc0,
                                        BstNode<Integer> possibleAncOrDesc1,
                                        BstNode<Integer> middle) {
-    // TODO - you fill in here.
-    return true;
+    boolean findDesc0 = helper(middle, possibleAncOrDesc0);
+    boolean findDesc1 = helper(middle, possibleAncOrDesc1);
+    if ((findDesc0 && findDesc1) || (!findDesc0 && !findDesc1)) {
+      return false;
+    }
+    if (findDesc0) {
+      return helper(possibleAncOrDesc1, middle);
+    }
+    return helper(possibleAncOrDesc0, middle);
   }
   @EpiTest(testDataFile = "descendant_and_ancestor_in_bst.tsv")
   public static boolean pairIncludesAncestorAndDescendantOfMWrapper(

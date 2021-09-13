@@ -6,27 +6,81 @@ import epi.test_framework.TestFailure;
 
 import java.util.List;
 public class AddingCredits {
-
+  public static class TreeNode {
+    String val;
+    int data;
+    TreeNode left, right;
+    boolean isDeleted;
+    public TreeNode(String val, int data) {
+      this.val = val;
+      this.data = data;
+      this.left = null;
+      this.right = null;
+      this.isDeleted = false;
+    }
+    public TreeNode(String val, int data, TreeNode left, TreeNode right) {
+      this.val = val;
+      this.data = data;
+      this.left = left;
+      this.right = right;
+      this.isDeleted = false;
+    }
+  }
   public static class ClientsCreditsInfo {
+    TreeNode root = new TreeNode("", Integer.MIN_VALUE);
+    Map<String, TreeNode> map = new HashMap<>();
+    int credits = 0;
+    private TreeNode find(TreeNode root, int data) {
+      if (root == null) {
+        return null;
+      }
+      if (root.data == data) {
+        return root;
+      }
+      return root.data<data ? find(root.right, data) : find(root.left, data);
+    }
+    private TreeNode find(String val) {
+      return map.getOrDefault(val, null);
+    }
+    
     public void insert(String clientID, int c) {
-      // TODO - you fill in here.
+      TreeNode cur = root;
+      TreeNode node = new TreeNode(clientID, c-credits);
+      map.put(clientID, node);
+      
       return;
     }
     public boolean remove(String clientID) {
-      // TODO - you fill in here.
+      TreeNode result = find(clientID);
+      if (result == null) {
+        return true;
+      }
+      result.isDeleted = true;
       return true;
     }
     public int lookup(String clientID) {
-      // TODO - you fill in here.
-      return 0;
+      TreeNode result = find(clientID);
+      if (result == null) {
+        return 0;
+      }
+      if (result.isDeleted) {
+        return 0;
+      }
+      return result.val + credits;
     }
     public void addAll(int C) {
-      // TODO - you fill in here.
+      credits += C;
       return;
     }
     public String max() {
-      // TODO - you fill in here.
-      return "";
+      TreeNode cur = root.right;
+      if (cur == null) {
+        return "";
+      }
+      while(cur.right!=null) {
+        cur = cur.right;
+      }
+      return cur.val;
     }
     @Override
     public String toString() {

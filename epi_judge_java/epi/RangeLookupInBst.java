@@ -5,7 +5,9 @@ import epi.test_framework.GenericTest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 public class RangeLookupInBst {
+  
   @EpiUserType(ctorParams = {int.class, int.class})
 
   public static class Interval {
@@ -16,13 +18,30 @@ public class RangeLookupInBst {
       this.right = right;
     }
   }
+  private static void helper(BstNode<Integer> tree,
+                             Interval interval,
+                             List<Integer> result) {
+    if (tree == null) {
+      return;
+    }
+    if (tree.data > interval.left) {
+      helper(tree.left, interval, result);
+    }
+    if (tree.data >= interval.left && tree.data <= interval.right) {
+      result.add(tree.data);
+    }
+    if (tree.data < interval.right) {
+      helper(tree.right, interval, result);
+    }
+    
+  }
 
   @EpiTest(testDataFile = "range_lookup_in_bst.tsv")
-
   public static List<Integer> rangeLookupInBst(BstNode<Integer> tree,
                                                Interval interval) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    List<Integer> result = new ArrayList<>();
+    helper(tree, interval, result);
+    return result;
   }
   public static void rangeLookupInBstHelper(BstNode<Integer> tree,
                                             Interval interval,
