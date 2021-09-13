@@ -1786,7 +1786,7 @@ problem_mapping = {
                 "total": 955
             },
             "Java: SearchInBst.java": {
-                "passed": 0,
+                "passed": 955,
                 "total": 955
             },
             "Python: search_in_bst.py": {
@@ -1800,7 +1800,7 @@ problem_mapping = {
                 "total": 3139
             },
             "Java: IsTreeABst.java": {
-                "passed": 0,
+                "passed": 3139,
                 "total": 3139
             },
             "Python: is_tree_a_bst.py": {
@@ -1814,7 +1814,7 @@ problem_mapping = {
                 "total": 949
             },
             "Java: SearchFirstGreaterValueInBst.java": {
-                "passed": 0,
+                "passed": 949,
                 "total": 949
             },
             "Python: search_first_greater_value_in_bst.py": {
@@ -1828,7 +1828,7 @@ problem_mapping = {
                 "total": 949
             },
             "Java: KLargestValuesInBst.java": {
-                "passed": 0,
+                "passed": 949,
                 "total": 949
             },
             "Python: k_largest_values_in_bst.py": {
@@ -1842,7 +1842,7 @@ problem_mapping = {
                 "total": 951
             },
             "Java: LowestCommonAncestorInBst.java": {
-                "passed": 0,
+                "passed": 951,
                 "total": 951
             },
             "Python: lowest_common_ancestor_in_bst.py": {
@@ -1856,7 +1856,7 @@ problem_mapping = {
                 "total": 950
             },
             "Java: BstFromPreorder.java": {
-                "passed": 0,
+                "passed": 950,
                 "total": 950
             },
             "Python: bst_from_preorder.py": {
