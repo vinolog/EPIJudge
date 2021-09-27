@@ -35,8 +35,16 @@ public class KthNodeInTree {
 
   public static BinaryTreeNode<Integer>
   findKthNodeBinaryTree(BinaryTreeNode<Integer> tree, int k) {
-    // TODO - you fill in here.
-    return null;
+    if (tree == null) {
+      return null;
+    }
+    int left = (tree.left == null ? 0 : tree.left.size);
+    if (k == (left+1)) {
+      return tree;
+    } else if (k <= left) {
+      return findKthNodeBinaryTree(tree.left, k);
+    }
+    return findKthNodeBinaryTree(tree.right, k-left-1);
   }
   public static BinaryTreeNode<Integer>
   convertToTreeWithSize(BinaryTree<Integer> original) {

@@ -8,11 +8,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 public class TreeConnectLeaves {
-
+  private static void helper(BinaryTreeNode<Integer> root, List<BinaryTreeNode<Integer>> result) {
+    if (root == null) {
+      return;
+    }
+    if (root.left == null && root.right == null) {
+      result.add(root);
+      return;
+    }
+    helper(root.left, result);
+    helper(root.right, result);
+  }
   public static List<BinaryTreeNode<Integer>>
   createListOfLeaves(BinaryTreeNode<Integer> tree) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    List<BinaryTreeNode<Integer>> result = new ArrayList<>();
+    helper(tree, result);
+    return result;
   }
   @EpiTest(testDataFile = "tree_connect_leaves.tsv")
   public static List<Integer>

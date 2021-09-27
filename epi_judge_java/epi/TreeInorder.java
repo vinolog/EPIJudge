@@ -2,7 +2,7 @@ package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
-import java.util.List;
+import java.util.*;
 public class TreeInorder {
 
   private static class NodeAndState {
@@ -18,8 +18,20 @@ public class TreeInorder {
 
   @EpiTest(testDataFile = "tree_inorder.tsv")
   public static List<Integer> inorderTraversal(BinaryTreeNode<Integer> tree) {
-    // TODO - you fill in here.
-    return null;
+    Stack<BinaryTreeNode<Integer>> stack = new Stack<>();
+    List<Integer> result = new ArrayList<>();
+    BinaryTreeNode<Integer> cur = tree;
+    while(cur != null || !stack.isEmpty()) {
+      if (cur != null) {
+        stack.push(cur);
+        cur = cur.left;
+      } else {
+        cur = stack.pop();
+        result.add(cur.data);  
+        cur = cur.right;
+      }
+    }
+    return result;
   }
 
   public static void main(String[] args) {
