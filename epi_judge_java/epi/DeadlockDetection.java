@@ -4,20 +4,41 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 public class DeadlockDetection {
 
   public static class GraphVertex {
+    public enum Color {W, G, B};
+    public Color color;
     public List<GraphVertex> edges;
 
-    public GraphVertex() { edges = new ArrayList<>(); }
+    public GraphVertex() { 
+      color = Color.W;
+      edges = new ArrayList<>(); 
+    }
+  }
+  private static boolean hasCycle(GraphVertex cur) {
+    if (cur.color == GraphVertex.Color.G) {
+      return true;
+    }
+    cur.color = GraphVertex.Color.G;
+    for (GraphVertex vertex: cur.edges) {
+      if (vertex.color != GraphVertex.Color.B && hasCycle(vertex)) {
+        return true;
+      }
+    }
+    cur.color = GraphVertex.Color.B;
+    return false;
+  }
+  public static boolean isDeadlocked(List<GraphVertex> graph) {
+    for (GraphVertex vertex: graph) {
+      if (vertex.color == GraphVertex.Color.W && hasCycle(vertex)) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  public static boolean isDeadlocked(List<GraphVertex> graph) {
-    // TODO - you fill in here.
-    return true;
-  }
   @EpiUserType(ctorParams = {int.class, int.class})
   public static class Edge {
     public int from;

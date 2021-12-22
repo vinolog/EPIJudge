@@ -4,9 +4,7 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 public class SearchMaze {
   @EpiUserType(ctorParams = {int.class, int.class})
 
@@ -38,10 +36,35 @@ public class SearchMaze {
 
   public enum Color { WHITE, BLACK }
 
+  private static void dfs(List<List<Color>> maze, HashSet<String> visited,
+                          Coordinate s, Coordinate e, List<Coordinate> path, List<Coordinate> result, 
+                          boolean pathFound) {
+    String cur = s.x+","+s.y;
+    if (s.x<0 || s.x>=maze.size() || s.y<0 || s.y>=maze.get(s.x).size() || visited.contains(cur) || maze.get(s.x).get(s.y) == Color.BLACK || pathFound) {
+      return;
+    }
+    visited.add(cur);
+    path.add(s);
+    if (s.equals(e)) {
+      for(Coordinate p: path) {
+        result.add(p);
+      }
+      pathFound = true;
+      return;
+    }
+    dfs(maze, visited, new Coordinate(s.x+1, s.y), e, path, result, pathFound);
+    dfs(maze, visited, new Coordinate(s.x-1, s.y), e, path, result, pathFound);
+    dfs(maze, visited, new Coordinate(s.x, s.y+1), e, path, result, pathFound);
+    dfs(maze, visited, new Coordinate(s.x, s.y-1), e, path, result, pathFound);
+    path.remove(path.size()-1);
+  }
   public static List<Coordinate> searchMaze(List<List<Color>> maze,
                                             Coordinate s, Coordinate e) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    List<Coordinate> path = new ArrayList<>();
+    List<Coordinate> result = new ArrayList<>();
+    HashSet<String> visited = new HashSet<>();
+    dfs(maze, visited, s, e, path, result, false);
+    return result;
   }
   public static boolean pathElementIsFeasible(List<List<Integer>> maze,
                                               Coordinate prev, Coordinate cur) {

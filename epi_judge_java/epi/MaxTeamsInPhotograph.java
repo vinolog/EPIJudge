@@ -14,9 +14,25 @@ public class MaxTeamsInPhotograph {
     public int maxDistance = 0;
   }
 
+  private static int dfs(GraphVertex vertex) {
+    if (vertex.maxDistance!=0) {
+      return vertex.maxDistance;
+    }
+    int max = 1;
+    for (GraphVertex next: vertex.edges) {
+      max = Math.max(max, 1+dfs(next));
+    }
+    vertex.maxDistance = max;
+    return max;
+  }
   public static int findLargestNumberTeams(List<GraphVertex> graph) {
-    // TODO - you fill in here.
-    return 0;
+    int result = 0;
+    for (GraphVertex vertex: graph) {
+      if (vertex.maxDistance == 0) {
+        result = Math.max(result, dfs(vertex));
+      }
+    }
+    return result;
   }
   @EpiUserType(ctorParams = {int.class, int.class})
   public static class Edge {

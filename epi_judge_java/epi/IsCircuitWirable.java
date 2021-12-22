@@ -4,17 +4,51 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 public class IsCircuitWirable {
-
+  public enum Color {
+      B,W,G;
+    }
   public static class GraphVertex {
     public int d = -1;
+     
+    Color color = Color.G;
     public List<GraphVertex> edges = new ArrayList<>();
   }
 
+  private static boolean bfs(GraphVertex vertex) {
+    Queue<GraphVertex> queue = new LinkedList<>();
+    Color val = Color.W;
+    queue.offer(vertex);
+    vertex.color = val;
+    while(!queue.isEmpty()) {
+      val = (val==Color.W)?Color.B:Color.W;
+      Queue<GraphVertex> temp = new LinkedList<>();
+      while(!queue.isEmpty()) {
+        GraphVertex cur = queue.poll();
+        for (GraphVertex v: cur.edges) {
+          if (v.color == cur.color) {
+            return false;
+          }
+          if (v.color == Color.G) {
+            v.color = val;
+            temp.offer(v);  
+          }
+        }
+      }
+      queue = temp;
+    }
+    return true;
+  }
+
   public static boolean isAnyPlacementFeasible(List<GraphVertex> graph) {
-    // TODO - you fill in here.
+    for (GraphVertex vertex: graph) {
+      if (vertex.color == Color.G) {
+        if (!bfs(vertex)) {
+          return false;
+        }
+      }
+    }
     return true;
   }
   @EpiUserType(ctorParams = {int.class, int.class})
